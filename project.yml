@@ -1,0 +1,67 @@
+name: Relay
+options:
+  bundleIdPrefix: com.utkarsh
+  deploymentTarget:
+    iOS: '27.0'
+  xcodeVersion: '27.0'
+  createIntermediateGroups: true
+packages:
+  LabKit:
+    path: ../LabKit
+settings:
+  base:
+    SWIFT_VERSION: '6.0'
+    SWIFT_STRICT_CONCURRENCY: complete
+    MARKETING_VERSION: '1.0'
+    CURRENT_PROJECT_VERSION: '4'
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+targets:
+  Relay:
+    type: application
+    platform: iOS
+    sources: [NetworkToy]
+    dependencies:
+      - package: LabKit
+        products: [LabKitCore, LabKitFeedback, LabKitUI]
+    info:
+      path: NetworkToy/Info.plist
+      properties:
+        CFBundleDisplayName: SnoopyNet
+        CFBundleName: SnoopyNet
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        UIUserInterfaceStyle: Dark
+        UIStatusBarHidden: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        ITSAppUsesNonExemptEncryption: false
+        LSApplicationCategoryType: public.app-category.education
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.utkarsh.networktoy
+        TARGETED_DEVICE_FAMILY: '1'
+        SUPPORTS_MACCATALYST: NO
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  RelayUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [UITests]
+    dependencies:
+      - target: Relay
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.utkarsh.networktoy.uitests
+        TEST_TARGET_NAME: Relay
+schemes:
+  Relay:
+    build:
+      targets:
+        Relay: all
+        RelayUITests: [test]
+    test:
+      targets: [RelayUITests]
